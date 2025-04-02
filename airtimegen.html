@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .container{
+      background-color: #4d5093;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+    }
+    .content{
+      background-color: #d7b12a;
+      width: 25%;
+      height: 94vh;
+      border: 1px solid #d7b12a;
+      border-radius: 10px;
+      box-shadow: 5px 4px 8px 2px #888888;
+    }
+    .con{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .provider{
+      padding: 7px;
+      border-radius: 10px;
+      margin-top: 20px;
+      outline: none;
+      width: 70%;
+      text-align: center;
+      font-size: 15px;
+    }
+    .net{
+      text-align: center;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      font-size: 20px;
+      margin-top: 20px;
+    }
+    .amount{
+      padding: 7px;
+      border-radius: 10px;
+      margin-top: 20px;
+      outline: none;
+      width: 40%;
+      text-align: center;
+      font-size: 15px;
+    }
+    .butt1{
+      padding: 10px;
+      background-color: black;
+      color: white;
+      font-size: 16px;
+      font-family: Arial, Helvetica, sans-serif;
+      border: 1px solid black;
+      border-radius: 4px;
+      margin-top: 20px;
+      cursor: pointer; 
+    }
+    .dev{
+      display: flex;
+      flex-direction: column;
+    }
+    #preview{
+      font-size: 25px;
+      margin-top: 20px;
+      text-align: center;
+      color: black;
+    }
+    input{
+      padding: 10px;
+      border: 1px solid white;
+      border-radius: 5px;
+      outline: none;
+      font-size: 16px;
+      color: black;
+      margin-top: 20px;
+    }
+    .butt2{
+      padding: 10px;
+      background-color: black;
+      color: white;
+      font-size: 16px;
+      font-family: Arial, Helvetica, sans-serif;
+      border: 1px solid black;
+      border-radius: 4px;
+      margin-top: 20px;
+      cursor: pointer; 
+    }
+    .r{
+      font-size: 15px;
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      color: black;
+      margin-top: 20px;
+    }
+    .pic{
+      width: 20%;
+      margin-top: 20px;
+      /* margin-bottom: 10px; */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="content">
+      <div class="con">
+        <p class="net">Network Provider</p>
+        <select value="" id="provider" class="provider">
+          <option value=""> Choose Provider</option>
+          <option value="MTN" id="">MTN</option>
+          <option value="GLO" id="">GLO</option>
+          <option value="9MOBILE" id="">9MOBILE</option>
+          <option value="AIRTEL" id="">AIRTEL</option>
+        </select>
+        <p class="net">Amount</p>
+        <select value="" id="amount" class="amount">
+          <option value="">Amount</option>
+          <option value="100" id="">100</option>
+          <option value="200" id="">200</option>
+          <option value="300" id="">300</option>
+          <option value="400" id="">400</option>
+          <option value="500" id="">500</option>
+        </select>
+        <button onclick="generatePin()" class="butt1">Generate Pin</button>
+        <p id="preview">
+    
+        </p>
+        <div class="dev">
+          <p class="net">Recharge Airtime</p>
+          <input type="text" id="input2" value="*311*Pin#">
+          <button onclick="rechargeAir()" class="butt2">Recharge</button>
+        </div>
+        <p class="r">Recharge airtime using the universal code *311*#</p>
+        <p class="r">Balance:</p>
+        <img src="mtn.png" alt="" class="pic">
+      </div>
+      
+    </div>
+    
+  </div>
+</body>
+</html>
+<script>
+    let myInput = document.getElementById('input2')
+    let display = document.getElementById('preview')
+    let provider = document.getElementById('provider')
+    let amount = document.getElementById('amount') 
+    let airtime  
+    let airArr = []
+    
+    
+    
+
+    function generatePin(params) {
+      if (provider.value === '') {
+        alert('Please choose a provider')
+        return;
+      } else if (amount.value === '') {
+        alert('please choose an amount')
+        return;
+      } else {
+            display.innerHTML = ''
+          for (let index = 0; index < 15; index++) {
+            airtime = Math.floor(Math.random() * 10)
+          //  console.log(airtime);
+          display.innerHTML += airtime
+            
+          }
+          let objAir = {pin: display.innerHTML,
+           provider: provider.value, 
+           amount: amount.value,
+            isUsed: false
+           }
+       airArr.push(objAir) 
+      }
+    }
+    // console.log(airtime);
+    
+    function rechargeAir() {
+            
+      let inputValue = myInput.value
+      // console.log(inputValue, "input value");
+        if (inputValue.length < 21) {
+        alert('Invalid card number')
+       }
+        else {
+        // let card = Number(inputValue.slice(5, 20))
+        let enteredPin = Number(inputValue.slice(5, 20));
+          console.log(enteredPin);
+         let card = airArr.find((card) => card.pin == enteredPin);
+          console.log(card);
+        if (display.innerHTML === card) {
+          alert('Your recharge is successful');
+        } else if (card.isUsed === true){
+          alert('Shey you did not know that you have used this card ni')
+          
+        } else if (inputValue.startsWith("*311*") && inputValue.includes(enteredPin) && inputValue.endsWith("#")){
+          card.isUsed = true 
+
+            alert( `You have successfully recharge ${provider.value} N${amount.value} was successful, 1hr free on Tiktok + 1.2GB N500, Dial *406*2# to buy.`)
+
+            let balance = Number(`${amount.value}`) 
+            display.innerHTML += 'Balance:' + ' ' + balance 
+            console.log(balance);
+        } else {
+          alert('Dear Customer, if you recharge that pin again, i\'m going to show you shege')
+        }
+        
+      
+      }
+      
+       
+
+    }
+</script>
+  </body>
