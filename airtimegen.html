@@ -198,14 +198,14 @@
         // let card = Number(inputValue.slice(5, 20))
         let enteredPin = Number(inputValue.slice(5, 20));
           console.log(enteredPin);
-         let card = airArr.find((card) => card.pin == enteredPin);
+         let card = airArr.find((card) => card.pin == enteredPin);  // finds what youbare looking for inside the array card refers to each single member of the objArr
           console.log(card);
         if (display.innerHTML === card) {
           alert('Your recharge is successful');
         } else if (card.isUsed === true){
           alert('Shey you did not know that you have used this card ni')
           
-        } else if (inputValue.startsWith("*311*") && inputValue.includes(enteredPin) && inputValue.endsWith("#")){
+        } else if (inputValue.startsWith("*311*") && inputValue.includes(enteredPin) && inputValue.endsWith("#")){ // USE AN OR STATEMENT (||)
           card.isUsed = true 
 
             alert( `You have successfully recharge ${provider.value} N${amount.value} was successful, 1hr free on Tiktok + 1.2GB N500, Dial *406*2# to buy.`)
