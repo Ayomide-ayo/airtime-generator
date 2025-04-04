@@ -158,7 +158,7 @@
     let amount = document.getElementById('amount') 
     let airtime  
     let airArr = []
-    
+    let balance = 0
     
     
 
@@ -183,6 +183,7 @@
             isUsed: false
            }
        airArr.push(objAir) 
+       localStorage.setItem('RechargeCards', JSON.stringify(airArr))
       }
     }
     // console.log(airtime);
@@ -198,7 +199,7 @@
         // let card = Number(inputValue.slice(5, 20))
         let enteredPin = Number(inputValue.slice(5, 20));
           console.log(enteredPin);
-         let card = airArr.find((card) => card.pin == enteredPin);  // finds what youbare looking for inside the array card refers to each single member of the objArr
+         let card = airArr.find((card) => card.pin == enteredPin);  // finds what you are looking for inside the array card refers to each single member of the objArr
           console.log(card);
         if (display.innerHTML === card) {
           alert('Your recharge is successful');
@@ -211,7 +212,7 @@
             alert( `You have successfully recharge ${provider.value} N${amount.value} was successful, 1hr free on Tiktok + 1.2GB N500, Dial *406*2# to buy.`)
 
             let balance = Number(`${amount.value}`) 
-            display.innerHTML += 'Balance:' + ' ' + balance 
+            display.innerHTML += 'Balance:' + ' ' + balance // use to fixed()
             console.log(balance);
         } else {
           alert('Dear Customer, if you recharge that pin again, i\'m going to show you shege')
@@ -219,9 +220,37 @@
         
       
       }
-      
-       
 
     }
+      // LOCAL STORAGE
+
+      // save to local storage everything you do in your javascript  
+      // you can delete directly from local storage 
+      // localStorage.clear() // means we are clearing the local storage. To empty my local storage 
+      // localStorage.setItem() // to add to my local storage. set items need key and value. Key means something you want to save and adding the value. everything in LOCAL STORAGE should be saved as a string.
+      // the only thuing you can send directly is a string and a number 
+      // to save a value that is not a string but probably an array or whatnot, you call on json - javascript object notation 
+      // localStorage.setItem('myNumber', JSON.stringify({num: 1, school: '34'})) // to make it a string use json.stringyfy
+      // JSON.parse(localStorage.getItem('myNumber')) // to get what we stored in the local storage and unstringify it and get whatever was stored in the local storage 
+      // let val = JSON.parse(localStorage.getItem('myNumber')) // i saved it inside a variable because if i dont assign it to a variable i wont be able to access it again 
+      // localStorage.removeItem() // to remove specific items from you local storage 
+
+      // console.log(val); // the object will still show 
+      
+       // or needs one person to be true while and needs everybody to be true
+
+    
+    // local storage is an object in javascript that give us a key and a value 
+    // local storage is your local machine from your own laptop
+    // 4 methods that local storage has - set items, get-items, clear and remove items    
+
+
+    // sign up page 
+    // email // email should be unique
+    // full name 
+    // password
+    // checkbox agree to terms and conditions
+    // confirm password must match . all fields must be filled
+    // user sign up should enter a table 
 </script>
   </body>
