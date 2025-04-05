@@ -11,7 +11,7 @@
       box-sizing: border-box;
     }
     .container{
-      background-color: #4d5093;
+      /* background-color: #4d5093; */
       width: 100%;
       height: 100vh;
       display: flex;
@@ -109,6 +109,19 @@
       margin-top: 20px;
       /* margin-bottom: 10px; */
     }
+    table,
+        td,
+        th,
+        tr,
+        thead,
+        tbody {
+            border-collapse: collapse;
+            padding: 10px;
+            border: 2px solid green;
+            margin-top: 30px;
+            /* background-color: #4d5093; */
+            font-size: 20px;
+        }       
   </style>
 </head>
 <body>
@@ -118,10 +131,10 @@
         <p class="net">Network Provider</p>
         <select value="" id="provider" class="provider">
           <option value=""> Choose Provider</option>
-          <option value="MTN" id="">MTN</option>
-          <option value="GLO" id="">GLO</option>
-          <option value="9MOBILE" id="">9MOBILE</option>
-          <option value="AIRTEL" id="">AIRTEL</option>
+          <option value="MTN" id="MTN">MTN</option>
+          <option value="GLO" id="GLO">GLO</option>
+          <option value="Etisalat" id="Etisalat">Etisalat</option>
+          <option value="AIRTEL" id="AIRTEL">AIRTEL</option>
         </select>
         <p class="net">Amount</p>
         <select value="" id="amount" class="amount">
@@ -147,81 +160,170 @@
       </div>
       
     </div>
+    <div>
+      <button onclick="display(airArr)">All cards</button> <button onclick="displayUsed()">Used cards</button> <button onclick="displayUnUsed() ">UnUsed cards</button>
+    </div>
+    <div>
+      <table>
+        <thead>
+          <th>S/N</th>
+          <th>Provider</th>
+          <th>Amount</th>
+          <th>Recharge Pin</th>
+          <th>Validity</th>
+        </thead>
+        <tbody id="tbody">
+          <tr>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <span id="MTN">
+
+      </span>
+      <span id="GLO">
+
+      </span>
+      <span id="MTN">
+
+      </span>
+      <span id="GLO">
+
+      </span>
+    </div>
     
   </div>
 </body>
 </html>
 <script>
+    let airArr = JSON.parse(localStorage.getItem('RechargeCards')) || []
     let myInput = document.getElementById('input2')
-    let display = document.getElementById('preview')
+    let displayP = document.getElementById('preview')
     let provider = document.getElementById('provider')
     let amount = document.getElementById('amount') 
-    let airtime  
-    let airArr = []
+    
     let balance = 0
-    
-    
+    let gloBalance = JSON.parse(localStorage.getItem('gloBalance'))
+    let mtnBalance = JSON.parse(localStorage.getItem('mtnBalance'))
+    let airtelBalance = JSON.parse(localStorage.getItem('airtelBalance'))
+    let etisalatBalance = JSON.parse(localStorage.getItem('etisalatBalance'))
+    // let airtime = Math.floor(Math.random() *  900000000000) + 100000000000
 
-    function generatePin(params) {
-      if (provider.value === '') {
-        alert('Please choose a provider')
-        return;
-      } else if (amount.value === '') {
-        alert('please choose an amount')
-        return;
-      } else {
-            display.innerHTML = ''
-          for (let index = 0; index < 15; index++) {
-            airtime = Math.floor(Math.random() * 10)
-          //  console.log(airtime);
-          display.innerHTML += airtime
-            
-          }
-          let objAir = {pin: display.innerHTML,
-           provider: provider.value, 
-           amount: amount.value,
-            isUsed: false
-           }
-       airArr.push(objAir) 
-       localStorage.setItem('RechargeCards', JSON.stringify(airArr))
-      }
+    function displayAllBalances(params) {
+        MTN.innerHTML = ` MTN Balance : ${mtnBalance.toFixed(2)}`
+        GLO.innerHTML = ` GLO Balance : ${gloBalance.toFixed(2)}`
+        Etisalat.innerHTML = ` GLO Balance : ${etisalatBalance.toFixed(2)}`
+        AIRTEL.innerHTML = ` GLO Balance : ${airtelBalance.toFixed(2)}`
     }
-    // console.log(airtime);
+
+    displayAllBalances()
+
+    display(airArr)
+
+    function generatePin() {
+      if (provider.value === '') {
+        alert('Please pick a provider')
+
+      } else if (amount.value === '') {
+        alert('Please pick an amount')
+
+      } else {
+        displayP.innerHTML = ''
+        let airtime = Math.floor(Math.random() *  900000000000) + 100000000000
+
+        let objAir = {airtime: airtime, provider: provider.value, amount: amount.value, isUsed: false}
+        airArr.push(objAir)
+        console.log(objAir, 'on line 204');        
+        localStorage.setItem('RechargeCards', JSON.stringify(airArr))
+         displayP.innerHTML += ` Pin: ${airtime}`
+        
+         
+      }
+      display(airArr)
+      console.log( 'on line 211');
+    }
+
+
+    
+    function display(cards) {
+        tbody.innerHTML = ''
+        cards.forEach((cards, i, arr) => {
+           return tbody.innerHTML += `<tr>
+                    <td> ${i + 1} </td>
+                    <td> ${cards.provider} </td>
+                    <td>  ${cards.amount} </td>
+                    <td> ${cards.airtime}  </td>
+                    <td> ${cards.isUsed}  </td>
+                </tr>`
+        })
+        console.log(cards);
+        
+
+    }
     
     function rechargeAir() {
-            
-      let inputValue = myInput.value
-      // console.log(inputValue, "input value");
-        if (inputValue.length < 21) {
-        alert('Invalid card number')
-       }
-        else {
-        // let card = Number(inputValue.slice(5, 20))
-        let enteredPin = Number(inputValue.slice(5, 20));
-          console.log(enteredPin);
-         let card = airArr.find((card) => card.pin == enteredPin);  // finds what you are looking for inside the array card refers to each single member of the objArr
-          console.log(card);
-        if (display.innerHTML === card) {
-          alert('Your recharge is successful');
-        } else if (card.isUsed === true){
-          alert('Shey you did not know that you have used this card ni')
-          
-        } else if (inputValue.startsWith("*311*") && inputValue.includes(enteredPin) && inputValue.endsWith("#")){ // USE AN OR STATEMENT (||)
-          card.isUsed = true 
+      // let card = Number(card)
 
-            alert( `You have successfully recharge ${provider.value} N${amount.value} was successful, 1hr free on Tiktok + 1.2GB N500, Dial *406*2# to buy.`)
-
-            let balance = Number(`${amount.value}`) 
-            display.innerHTML += 'Balance:' + ' ' + balance // use to fixed()
-            console.log(balance);
-        } else {
-          alert('Dear Customer, if you recharge that pin again, i\'m going to show you shege')
-        }
-        
+      let foundCard = airArr.find((cards) => { return cards.airtime == myInput.value.trim().slice(5, 17)})
+      console.log(foundCard, 'on line 248');
+      console.log(myInput.value.trim().slice(5, 17));
       
+
+      if (myInput.value.trim() === '') {
+        alert(`Please input a valid code`)
+
+      } else if (foundCard === undefined){
+        alert('Card does not exist and i wont beg you again') 
+
+      } else if (myInput.value !== `*311*${foundCard.airtime}#`){
+        alert('Sho gbadun bayii, she you dont know how to recharge again ni')
+
+      } else if(foundCard.isUsed === true){
+        alert('Card has been used ')
+      } else {
+        foundCard.isUsed = true
+        localStorage.setItem('RechargeCards', JSON.stringify(airArr))
+        alert(`You have successfully recharged ${foundCard.provider} N${foundCard.amount}. Enjoy 1hr free on TikTok + 1.2GB for N500. Dial *406*2# to buy.`);
+
+        display(airArr)
+
       }
 
+      function displayUsed() {
+        let usedCards = airArr.filter((cards) => {
+            return cards.used === true
+            display(usedCards)
+        })
+        
+      }
+      
+      function displayUnUsed() {
+        let unUsedCards = airArr.filter((cards) => {
+            return cards.used === false
+        })
+        display(unUsedCards)
+      }
     }
+
+    function saveAndDisplay(amount, prov) {
+        if (prov === 'MTN') {
+            mtnTotal += Number(amount)
+            localStorage.setItem('mtnTotalBalance', mtnTotal)
+        } else if (prov === 'GLO') {
+            gloTotal += Number(amount)
+            localStorage.setItem('gloTotalBalance', gloTotal)
+        } else if (prov === 'GLO') {
+            gloTotal += Number(amount)
+            localStorage.setItem('gloTotalBalance', gloTotal)
+        } else {
+          gloTotal += Number(amount)
+          localStorage.setItem('gloTotalBalance', gloTotal)
+        }
+
+
+        displayAllBalances()
+    }
+     
       // LOCAL STORAGE
 
       // save to local storage everything you do in your javascript  
