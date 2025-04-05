@@ -2,197 +2,191 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title>Recharge Card Generator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
   <style>
-    *{
-      margin: 0;
-      padding: 0;
+    * {
       box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    .container{
-      /* background-color: #4d5093; */
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(to bottom right, #fceabb, #f8b500);
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      max-width: 700px;
+      margin: 20px auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #f39c12;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    select,
+    input[type="text"],
+    input[type="number"] {
       width: 100%;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-    }
-    .content{
-      background-color: #d7b12a;
-      width: 25%;
-      height: 94vh;
-      border: 1px solid #d7b12a;
-      border-radius: 10px;
-      box-shadow: 5px 4px 8px 2px #888888;
-    }
-    .con{
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    .provider{
-      padding: 7px;
-      border-radius: 10px;
-      margin-top: 20px;
-      outline: none;
-      width: 70%;
-      text-align: center;
-      font-size: 15px;
-    }
-    .net{
-      text-align: center;
-      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-      font-size: 20px;
-      margin-top: 20px;
-    }
-    .amount{
-      padding: 7px;
-      border-radius: 10px;
-      margin-top: 20px;
-      outline: none;
-      width: 40%;
-      text-align: center;
-      font-size: 15px;
-    }
-    .butt1{
       padding: 10px;
-      background-color: black;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .buttons button {
+      flex: 1;
+      padding: 12px;
+      background-color: #f39c12;
       color: white;
-      font-size: 16px;
-      font-family: Arial, Helvetica, sans-serif;
-      border: 1px solid black;
-      border-radius: 4px;
-      margin-top: 20px;
-      cursor: pointer; 
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
     }
-    .dev{
+
+    .buttons button:hover {
+      background-color: #e67e22;
+    }
+
+    .preview-box {
+      margin-top: 20px;
+      background-color: #fffaf0;
+      padding: 15px;
+      border: 1px dashed #f39c12;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 30px;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+
+    tr:hover {
+      background-color: #fff9e6;
+    }
+
+    .balances {
       display: flex;
-      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 15px;
+      margin-top: 30px;
     }
-    #preview{
-      font-size: 25px;
-      margin-top: 20px;
+
+    .balance-card {
+      flex: 1 1 45%;
+      padding: 15px;
+      background-color: #fdf7e4;
+      border: 1px solid #f39c12;
+      border-radius: 10px;
       text-align: center;
-      color: black;
+      font-weight: bold;
+      color: #e67e22;
     }
-    input{
-      padding: 10px;
-      border: 1px solid white;
-      border-radius: 5px;
-      outline: none;
-      font-size: 16px;
-      color: black;
-      margin-top: 20px;
-    }
-    .butt2{
-      padding: 10px;
-      background-color: black;
-      color: white;
-      font-size: 16px;
-      font-family: Arial, Helvetica, sans-serif;
-      border: 1px solid black;
-      border-radius: 4px;
-      margin-top: 20px;
-      cursor: pointer; 
-    }
-    .r{
-      font-size: 15px;
-      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-      color: black;
-      margin-top: 20px;
-    }
-    .pic{
-      width: 20%;
-      margin-top: 20px;
-      /* margin-bottom: 10px; */
-    }
-    table,
-        td,
-        th,
-        tr,
-        thead,
-        tbody {
-            border-collapse: collapse;
-            padding: 10px;
-            border: 2px solid green;
-            margin-top: 30px;
-            /* background-color: #4d5093; */
-            font-size: 20px;
-        }       
   </style>
 </head>
 <body>
+
   <div class="container">
-    <div class="content">
-      <div class="con">
-        <p class="net">Network Provider</p>
-        <select value="" id="provider" class="provider">
-          <option value=""> Choose Provider</option>
-          <option value="MTN" id="MTN">MTN</option>
-          <option value="GLO" id="GLO">GLO</option>
-          <option value="Etisalat" id="Etisalat">Etisalat</option>
-          <option value="AIRTEL" id="AIRTEL">AIRTEL</option>
-        </select>
-        <p class="net">Amount</p>
-        <select value="" id="amount" class="amount">
-          <option value="">Amount</option>
-          <option value="100" id="">100</option>
-          <option value="200" id="">200</option>
-          <option value="300" id="">300</option>
-          <option value="400" id="">400</option>
-          <option value="500" id="">500</option>
-        </select>
-        <button onclick="generatePin()" class="butt1">Generate Pin</button>
-        <p id="preview">
-    
-        </p>
-        <div class="dev">
-          <p class="net">Recharge Airtime</p>
-          <input type="text" id="input2" value="*311*Pin#">
-          <button onclick="rechargeAir()" class="butt2">Recharge</button>
-        </div>
-        <p class="r">Recharge airtime using the universal code *311*#</p>
-        <p class="r">Balance:</p>
-        <img src="mtn.png" alt="" class="pic">
-      </div>
-      
+    <h2>Recharge Card Generator</h2>
+
+    <label for="provider">Select Network Provider</label>
+    <select id="provider">
+      <option value="">-- Choose Provider --</option>
+      <option value="mtn">MTN</option>
+      <option value="glo">GLO</option>
+      <option value="airtel">AIRTEL</option>
+      <option value="etisalat">ETISALAT</option>
+    </select>
+
+    <label for="amount">Select Amount</label>
+    <select id="amount">
+      <option value="">-- Choose Amount --</option>
+      <option value="100">₦100</option>
+      <option value="200">₦200</option>
+      <option value="500">₦500</option>
+      <option value="1000">₦1000</option>
+    </select>
+
+    <div class="buttons">
+      <button onclick="generatePin()">Generate Card</button>
+      <button onclick="displayUsed()">Show Used Cards</button>
+      <button onclick="displayUnUsed()">Show Unused Cards</button>
     </div>
-    <div>
-      <button onclick="display(airArr)">All cards</button> <button onclick="displayUsed()">Used cards</button> <button onclick="displayUnUsed() ">UnUsed cards</button>
-    </div>
-    <div>
-      <table>
-        <thead>
-          <th>S/N</th>
+
+    <div class="preview-box" id="preview">Generated PIN will appear here</div>
+
+    <label for="input2">Recharge with Code</label>
+    <input type="text" id="input2" placeholder="e.g. *311*123456789012#" value="*311*#">
+
+    <button style="margin-top: 10px;" onclick="rechargeAir()">Recharge</button>
+  </div>
+
+  <div class="container">
+    <h2>Recharge Cards Table</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
           <th>Provider</th>
           <th>Amount</th>
-          <th>Recharge Pin</th>
-          <th>Validity</th>
-        </thead>
-        <tbody id="tbody">
-          <tr>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-      <span id="MTN">
-
-      </span>
-      <span id="GLO">
-
-      </span>
-      <span id="MTN">
-
-      </span>
-      <span id="GLO">
-
-      </span>
-    </div>
-    
+          <th>PIN</th>
+          <th>Used?</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <!-- JavaScript will inject rows here -->
+      </tbody>
+    </table>
   </div>
+
+  <div class="container">
+    <h2>Account Balances</h2>
+    <div class="balances">
+      <div class="balance-card" id="MTN">MTN Balance: ₦0.00</div>
+      <div class="balance-card" id="GLO">GLO Balance: ₦0.00</div>
+      <div class="balance-card" id="AIRTEL">AIRTEL Balance: ₦0.00</div>
+      <div class="balance-card" id="ETISALAT">ETISALAT Balance: ₦0.00</div>
+    </div>
+  </div>
+
 </body>
 </html>
 <script>
@@ -202,21 +196,23 @@
     let provider = document.getElementById('provider')
     let amount = document.getElementById('amount') 
     
-    let balance = 0
-    let gloBalance = JSON.parse(localStorage.getItem('gloBalance'))
-    let mtnBalance = JSON.parse(localStorage.getItem('mtnBalance'))
-    let airtelBalance = JSON.parse(localStorage.getItem('airtelBalance'))
-    let etisalatBalance = JSON.parse(localStorage.getItem('etisalatBalance'))
+    // let balance = 0
+    let mtnBalance = Number(JSON.parse(localStorage.getItem('mtnBalance'))) 
+    let gloBalance = Number(JSON.parse(localStorage.getItem('gloBalance'))) 
+    let airtelBalance = Number(JSON.parse(localStorage.getItem('airtelBalance'))) 
+    let etisalatBalance = Number(JSON.parse(localStorage.getItem('etisalatBalance'))) 
     // let airtime = Math.floor(Math.random() *  900000000000) + 100000000000
 
     function displayAllBalances(params) {
         MTN.innerHTML = ` MTN Balance : ${mtnBalance.toFixed(2)}`
         GLO.innerHTML = ` GLO Balance : ${gloBalance.toFixed(2)}`
-        Etisalat.innerHTML = ` GLO Balance : ${etisalatBalance.toFixed(2)}`
-        AIRTEL.innerHTML = ` GLO Balance : ${airtelBalance.toFixed(2)}`
+        AIRTEL.innerHTML = `AIRTEL Balance : ${airtelBalance.toFixed(2)}`
+        ETISALAT.innerHTML = ` ETISALAT Balance : ${etisalatBalance.toFixed(2)}`
     }
 
     displayAllBalances()
+    // console.log(saveAndDisplay(amount), 'on line 214');
+    
 
     display(airArr)
 
@@ -235,7 +231,7 @@
         airArr.push(objAir)
         console.log(objAir, 'on line 204');        
         localStorage.setItem('RechargeCards', JSON.stringify(airArr))
-         displayP.innerHTML += ` Pin: ${airtime}`
+         displayP.innerHTML +=  `${airtime}`
         
          
       }
@@ -265,8 +261,8 @@
       // let card = Number(card)
 
       let foundCard = airArr.find((cards) => { return cards.airtime == myInput.value.trim().slice(5, 17)})
-      console.log(foundCard, 'on line 248');
-      console.log(myInput.value.trim().slice(5, 17));
+      // console.log(foundCard, 'on line 248');
+      // console.log(myInput.value.trim().slice(5, 17));
       
 
       if (myInput.value.trim() === '') {
@@ -282,47 +278,55 @@
         alert('Card has been used ')
       } else {
         foundCard.isUsed = true
+        saveAndDisplay(foundCard.amount, foundCard.provider);
         localStorage.setItem('RechargeCards', JSON.stringify(airArr))
         alert(`You have successfully recharged ${foundCard.provider} N${foundCard.amount}. Enjoy 1hr free on TikTok + 1.2GB for N500. Dial *406*2# to buy.`);
 
         display(airArr)
 
       }
+    } 
 
       function displayUsed() {
         let usedCards = airArr.filter((cards) => {
-            return cards.used === true
-            display(usedCards)
+            return cards.isUsed === true
         })
-        
-      }
-      
-      function displayUnUsed() {
+
+        display(usedCards)
+     
+    }
+    function displayUnUsed() {
         let unUsedCards = airArr.filter((cards) => {
-            return cards.used === false
+            return cards.isUsed === false
         })
         display(unUsedCards)
-      }
     }
 
     function saveAndDisplay(amount, prov) {
+
         if (prov === 'MTN') {
-            mtnTotal += Number(amount)
-            localStorage.setItem('mtnTotalBalance', mtnTotal)
+            mtnBalance += Number(amount)
+            localStorage.setItem('mtnBalance', mtnBalance)
+            console.log(mtnBalance);
         } else if (prov === 'GLO') {
-            gloTotal += Number(amount)
-            localStorage.setItem('gloTotalBalance', gloTotal)
-        } else if (prov === 'GLO') {
-            gloTotal += Number(amount)
-            localStorage.setItem('gloTotalBalance', gloTotal)
+            gloBalance += Number(amount)
+            localStorage.setItem('gloBalance', gloBalance)
+        } else if (prov === 'AIRTEL') {
+            airtelBalance += Number(amount)
+            localStorage.setItem('airtelBalance', airtelBalance)
         } else {
-          gloTotal += Number(amount)
-          localStorage.setItem('gloTotalBalance', gloTotal)
-        }
+          etisalatBalance += Number(amount)
+          localStorage.setItem('etisalatBalance', etisalatBalance)
+        } 
+
 
 
         displayAllBalances()
+        console.log(`Recharged ${prov} with ₦${amount}`);
+        
     }
+     
+    
      
       // LOCAL STORAGE
 
